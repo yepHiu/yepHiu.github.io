@@ -22,7 +22,7 @@
 
   
 
-  <title>blog使用指南 | 奶茶不加冰</title>
+  <title>寒假学习笔记 | 奶茶不加冰</title>
 
   
 
@@ -96,11 +96,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">blog使用指南</h1>
+          <h1 class="title-wrap">寒假学习笔记</h1>
           <h2 class="title-sub-wrap">
             <strong>奶茶不加冰</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2022-01-14T12:25:00.000Z" itemprop="datePublished">2022-01-14</time>
+            <time  class="article-date" datetime="2022-01-18T09:16:56.000Z" itemprop="datePublished">2022-01-18</time>
           </h2>
           <ul class="wrap-list dark">
   
@@ -109,7 +109,7 @@
 </ul>
           <ul class="wrap-list dark">
   
-    <li><a href="/tags/%E5%AD%A6%E4%B9%A0/">🏷️ 学习</a></li>
+    <li><a href="/tags/%E7%AC%94%E8%AE%B0/">🏷️ 笔记</a></li>
   
 </ul>
         </div>
@@ -133,11 +133,94 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>创建这个博客的原因是想要记录下我学习的过程，生活的经历。也想着学习搭建博客的过程中学会一些关于前端的知识，虽然目前我仍然对于前端的html和css还是不太了解的状态，这个博客也是自己利用hexo框架和大佬<a target="_blank" rel="noopener" href="https://github.com/miiiku">miiiku</a>的主题进行搭建，目前针对部分内容进行了定制，并参考了作者的做法嵌入评论系统（虽然我很清楚没啥人来），目前博客的完成度不高，但是处于可以使用的状态，但是还有很多问题没有解决，图床的问题巴拉巴拉的。  </p>
-<p>自己也不是很熟悉hexo的操作和文章的写作故使用这篇blog的使用  </p>
-<p>目前blog是部署在github上主要是考虑到晚上教程的通用性和github的开源，后面会考虑同时部署在gitee和github（不知道是否可行）。</p>
-<h1 id="blog的使用"><a href="#blog的使用" class="headerlink" title="blog的使用"></a>blog的使用</h1><p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands.html">hexo 指令</a><br><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration">hexo 配置</a>  </p>
-<h1 id="blog的部署"><a href="#blog的部署" class="headerlink" title="blog的部署"></a>blog的部署</h1><p>在这里主要是将blog部署至github平台</p>
+        <h1 id="关于多种形式的天数-日期转换"><a href="#关于多种形式的天数-日期转换" class="headerlink" title="关于多种形式的天数-日期转换"></a>关于多种形式的天数-日期转换</h1><p>涉及的形式  </p>
+<ul>
+<li>函数</li>
+<li>数组</li>
+<li>指针</li>
+<li>结构体</li>
+<li>结构体指针</li>
+<li>枚举</li>
+</ul>
+<h2 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h2><p>要求是将天数转换为日期，其中涉及的问题有大小月问题，星期几的问题。先找到普适的算法然后再去套形式。下面将会针对以上的问题进行解决。  </p>
+<ul>
+<li>大小月问题<br>由于我们正常的日历中，是存在着大小月的区别，导致无法想秒值转发一样直接按照进制取余或者取模。因此我们需要换一种思路。<br>思路：  <ul>
+<li>针对月份的确认，直接对天数进行取模<br><code>mon = tick % 30; </code><br>虽然有大小月的存在但是一年下来区别只有10多天直接对30取模，可直接确定月份，并且没有误差这是可行的。  </li>
+<li>针对日数<br>采用一个数组储存每个月的天数<br><code>short Days[13] = &#123; 0,31,29,31,30,31,30,31,31,30,31,30,31 &#125;;</code><br>然后根据上面得到的月份，通过计算得到到该月之前的全部天数，然后再用输入的天数-该月之前的全部天数，即可得到天数。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> short sumdays(short a)</span><br><span class="line"> &#123;</span><br><span class="line">short Days[13] = &#123; 0,31,29,31,30,31,30,31,31,30,31,30,31 &#125;;</span><br><span class="line">short sumDay = 0, cnt;</span><br><span class="line">for (cnt = 0; cnt &lt;= a; cnt++)</span><br><span class="line">&#123;</span><br><span class="line"> sumDay = sumDay + Days[cnt];</span><br><span class="line">&#125;</span><br><span class="line"> return sumDay;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+<li>星期的问题<br>将天数对7取模<br><code> weekday = tick % 7</code>  </li>
+<li>（但是要注意的是注意第一天的日期）*</li>
+</ul>
+</li>
+</ul>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	int tick;</span><br><span class="line">	short arrTimeVal[3];</span><br><span class="line"></span><br><span class="line">	printf(&quot;please input a tick between 0~86399\n&quot;);</span><br><span class="line">	scanf_s(&quot;%d&quot;, &amp;tick);</span><br><span class="line"></span><br><span class="line">	arrTimeVal[0] = tick / 3600;</span><br><span class="line">	arrTimeVal[1] = (tick % 3600) / 60;</span><br><span class="line">	arrTimeVal[2] = (tick % 3600) % 60;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d-%d-%d\n&quot;, arrTimeVal[0], arrTimeVal[1], arrTimeVal[2]);</span><br><span class="line">	while (1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用数组将月份，日期，星期几等数据储存在arrTimeVal数组中</p>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">unsigned char CalTimeVal(int tick, short* pTimeVal)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned char valid;</span><br><span class="line"></span><br><span class="line">	if (tick &lt; 0 &amp;&amp; tick&gt;366)</span><br><span class="line">		valid = 0;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		valid = 1;</span><br><span class="line"></span><br><span class="line">		*pTimeVal = tick / 30;</span><br><span class="line">		*(pTimeVal + 1) = tick - sumdays(( * pTimeVal));</span><br><span class="line">		if (*(pTimeVal + 1) &lt; 0)</span><br><span class="line">			*(pTimeVal+1) = -*(pTimeVal+1);</span><br><span class="line">		*(pTimeVal + 2) = tick % 7;</span><br><span class="line">	&#125;</span><br><span class="line">	return valid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用指针这一形式涉及的知识点以及笔记</p>
+<ul>
+<li>数组和指针的关系<br>数组的名称就是数组首地址<br>如下表所示：  <table>
+<thead>
+<tr>
+<th>数组操作</th>
+<th>指针操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;arr[0]</td>
+<td>arr</td>
+</tr>
+<tr>
+<td>arr[0]</td>
+<td>*arr</td>
+</tr>
+<tr>
+<td>arr[1]</td>
+<td>*(arr+1)</td>
+</tr>
+</tbody></table>
+</li>
+<li>指针中的命名问题<br>为了使在编程过程中可使得代码有较强的可读性，在涉及形式参数和传参的命名采用p+函数名的形式，区分开指针和普通的变量。<br><code>int example(int* pExample) </code>  </li>
+<li>指针变量的注意事项  <ul>
+<li>指针要明确指针的类型  </li>
+<li>指针在使用之前就要进行初始化</li>
+</ul>
+</li>
+</ul>
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>代码部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">	short mon;</span><br><span class="line">	short day;</span><br><span class="line">	short weekday;</span><br><span class="line">&#125;StructTimeVal;</span><br><span class="line">···</span><br><span class="line"> StructTimeVal CalTimeVal(int tick)</span><br><span class="line">&#123;</span><br><span class="line">	TimeVal tv;</span><br><span class="line"></span><br><span class="line">	tv.mon = tick / 30;</span><br><span class="line">	tv.day = tick - sumdays(tv.mon);</span><br><span class="line">	if (tv.day &lt; 0)</span><br><span class="line">		tv.day = -tv.day;</span><br><span class="line">	tv.weekday = tick % 7;</span><br><span class="line"></span><br><span class="line">	return tv;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结构体的笔记以及注意事项  </p>
+<ul>
+<li><p>结构体的定义<br>推荐使用以下格式进行定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line"> short mon;</span><br><span class="line"> short day;</span><br><span class="line"> short weekday;</span><br><span class="line">&#125;StructTimeVal;</span><br><span class="line">TimeVal tv;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 结构体的命名</span><br><span class="line">  使用typedef声明的话记得要在声明后的新的名字上加上Struct+名字。这样可以增加代码的易读性。也同时方便自己的编程。</span><br><span class="line">* 结构体的赋值</span><br></pre></td></tr></table></figure>
+<p>StructTimeVal tv1,tv2;</p>
+<p>tv1=tv2;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  根据上面的声明两个结构体是个可将一个结构体的值赋值到另外一个结构体上面的。根据这样原理我们也可以写一个返回值为结构体的函数，返回一个值给自己定义的结构体，这些都是可行的。  </span><br><span class="line"></span><br><span class="line">## 结构体指针</span><br><span class="line">## 枚举</span><br><span class="line">前言：在这次实用枚举之前我是还没有接触过枚举这一种数据类型  </span><br><span class="line">代码部分：  </span><br></pre></td></tr></table></figure>
+<p>typedef enum{MON=0,DAY,WEEK}EnumTimeVal;<br>······<br>short calTimeVal(int tick, unsigned char mode)<br>{<br>  short timeVal=0;<br>  switch (mode)<br>  {</p>
+<pre><code>  case MON:
+      timeVal = tick / 30;
+      break;
+  case DAY:
+      timeVal = tick - sumdays(calTimeVal(tick, MON));
+      break;
+  case WEEK:
+      timeVal = tick % 7;
+      if (timeVal &lt; 0)
+          timeVal = -timeVal;
+      break;
+  default:
+      break;
+</code></pre>
+<p>  }<br>  return timeVal;<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">关于枚举的笔记和相关的注意事项</span><br><span class="line">* 关于枚举的定义</span><br><span class="line">  一样使用```typedef```进行定义</span><br></pre></td></tr></table></figure>
+<p>typedef enum{<br>  MON=0,<br>  TUE,<br>  WED,<br>}EnumWeekDay;<br>EnumWeekDay workDay, weekDay;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* 关于命名要要求  </span><br><span class="line">  参考上面结构体的命名采用``` Enum+name```的形式。</span><br><span class="line">* 关于枚举类型的赋值  </span><br><span class="line">  顾名思义，枚举就是一个个逐个赋值，值成一定规律。  </span><br><span class="line">  例如  </span><br></pre></td></tr></table></figure>
+<p>typedef enum{<br>  MON=0,<br>  TUE,<br>  WED,<br>}EnumWeekDay;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">就是``` MON=0,TUE=1,WED=2```  </span><br><span class="line">但是也有其他情况</span><br></pre></td></tr></table></figure>
+<p>typedef enum{<br>  MON=0,<br>  TUE=3,<br>  WED,<br>}EnumWeekDay;<br><code> 那就是</code> MON=0,TUE=3,WED=4```</p>
+<hr>
+<p>要写推文去了，晚点更新  </p>
+</li>
+</ul>
 
       </section>
 
@@ -145,20 +228,20 @@
       
         <nav class="article-nav">
           
+          
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
     <div class="card-text">
       
-        <a href="/2022/01/14/1-14%E7%9A%84%E7%A2%8E%E7%A2%8E%E5%BF%B5/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">1.14的碎碎念</h2>
+        <a href="/2022/01/18/%E5%B9%B8%E7%A6%8F%E5%B7%A5%E5%8E%82%E4%B8%93%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">幸福工厂专用服务器搭建</h2>
         </a>
       
-      <div class="card-text--row">Newer</div>
+      <div class="card-text--row">Older</div>
     </div>
   </article>
 </div>
-          
           
         </nav>
       
