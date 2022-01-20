@@ -194,7 +194,21 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 结构体的命名</span><br><span class="line">  使用typedef声明的话记得要在声明后的新的名字上加上Struct+名字。这样可以增加代码的易读性。也同时方便自己的编程。</span><br><span class="line">* 结构体的赋值</span><br></pre></td></tr></table></figure>
 <p>StructTimeVal tv1,tv2;</p>
 <p>tv1=tv2;</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  根据上面的声明两个结构体是个可将一个结构体的值赋值到另外一个结构体上面的。根据这样原理我们也可以写一个返回值为结构体的函数，返回一个值给自己定义的结构体，这些都是可行的。  </span><br><span class="line"></span><br><span class="line">## 结构体指针</span><br><span class="line">## 枚举</span><br><span class="line">前言：在这次实用枚举之前我是还没有接触过枚举这一种数据类型  </span><br><span class="line">代码部分：  </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  根据上面的声明两个结构体是个可将一个结构体的值赋值到另外一个结构体上面的。根据这样原理我们也可以写一个返回值为结构体的函数，返回一个值给自己定义的结构体，这些都是可行的。  </span><br><span class="line"></span><br><span class="line">## 结构体指针</span><br><span class="line">结构体指针是一种指向结构体的指针  </span><br><span class="line">结构体指针使用“结构体指针名-&gt;成员名”的方式引用结构体变量中的成员  </span><br><span class="line">如``` pTV-&gt;hour  pTV-&gt;min```   </span><br><span class="line">注意事项是指针的相对位置  </span><br><span class="line">``` pA ```假如这是一个结构体指针，那么```pA+1```是跨过了一个结构体  </span><br><span class="line">同时在命名的时候记得在指针的名字前面加上```p```  </span><br><span class="line">  </span><br><span class="line">代码部分</span><br></pre></td></tr></table></figure>
+<p>typedef struct<br>{<br>  short mon;<br>  short day;<br>  short weekday;<br>}StructTimeVal;<br>······<br>unsigned char CalcTimeVal(int tick, StructTimeVal* pTV)<br>{<br>  unsigned char vaild;</p>
+<p>  if (tick &lt; 0 &amp;&amp; tick&gt;366)</p>
+<pre><code>  vaild = 0;
+</code></pre>
+<p>  else<br>  {</p>
+<pre><code>  vaild = 1;
+  pTV-&gt;mon = tick / 30;
+  pTV-&gt;day = tick - sumdays(pTV-&gt;mon);
+  if (pTV-&gt;day &lt; 0)
+      pTV-&gt;day = -pTV-&gt;day;
+  pTV-&gt;weekday = tick % 7;
+</code></pre>
+<p>  }<br>  return vaild;<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 枚举</span><br><span class="line">前言：在这次实用枚举之前我是还没有接触过枚举这一种数据类型  </span><br><span class="line">代码部分：  </span><br></pre></td></tr></table></figure>
 <p>typedef enum{MON=0,DAY,WEEK}EnumTimeVal;<br>······<br>short calTimeVal(int tick, unsigned char mode)<br>{<br>  short timeVal=0;<br>  switch (mode)<br>  {</p>
 <pre><code>  case MON:
       timeVal = tick / 30;
@@ -217,8 +231,6 @@
 <p>typedef enum{<br>  MON=0,<br>  TUE,<br>  WED,<br>}EnumWeekDay;</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">就是``` MON=0,TUE=1,WED=2```  </span><br><span class="line">但是也有其他情况</span><br></pre></td></tr></table></figure>
 <p>typedef enum{<br>  MON=0,<br>  TUE=3,<br>  WED,<br>}EnumWeekDay;<br><code> 那就是</code> MON=0,TUE=3,WED=4```</p>
-<hr>
-<p>要写推文去了，晚点更新  </p>
 </li>
 </ul>
 
@@ -340,14 +352,14 @@
     <ul class="categorys-list">
       
         <li class="categorys-list-item">
-          <a href="/categories/life-emo/">
-            life &amp; emo (2)
+          <a href="/categories/%E6%96%87%E7%AB%A0/">
+            文章 (2)
           </a>
         </li>
       
         <li class="categorys-list-item">
-          <a href="/categories/%E6%96%87%E7%AB%A0/">
-            文章 (2)
+          <a href="/categories/life-emo/">
+            life &amp; emo (2)
           </a>
         </li>
       
